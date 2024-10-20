@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/process_purchase": {"origins": "https://123popopcorn.github.io"}})
 
 @app.route('/process_purchase', methods=['POST'])
 def process_purchase():
