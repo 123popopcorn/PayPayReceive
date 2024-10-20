@@ -29,11 +29,13 @@ google_app_password = os.getenv('GOOGLE_APP_PASSWORD')
 
 @app.route('/process_purchase', methods=['POST'])
 def process_purchase():
+    print(phone)
+    print(google_app_password)
     # JSONデータを取得
     data = request.json
     email = data.get('email')
     paypay_link = data.get('paypayLink')
-    
+    print(f"Email: {email}, PayPay Link: {paypay_link}")
     # 購入処理に関するロジック（例: データベースに保存、メール送信など）
     try:
         # 購入処理の疑似ロジック（例: データを保存したり、メール送信をする）
