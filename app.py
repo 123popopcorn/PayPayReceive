@@ -36,23 +36,26 @@ def process_purchase():
     
     # 購入処理に関するロジック（例: データベースに保存、メール送信など）
     try:
-        # 購入処理の疑似ロジック（例: データを保存したり、メール送信をする）
-        # 実際のロジックをここに記述
-        # 例: save_to_database(email, paypay_link)
+        # デバッグ用のログを追加
+        print(f"Received data: {data}")
+        print(f"Email: {email}, PayPay Link: {paypay_link}")
         success, message, link_info = link_check(paypay_link)
+        print(f"Link check result: {success}, {message}, {link_info}")
         
-        # 成功した場合のレスポンス
         if success:
-            paypay=PayPay(phone,password,device_uuid,proxy=proxies)
+            paypay = PayPay(phone, password, device_uuid, proxy=proxies)
             paypay.link_receive(paypay_link, link_info=link_info)
+            print("Payment link received successfully.")
             send_test_email(email)
+            print("Test email sent.")
             return jsonify({'message': f'{message}'}), 200
         else:
-            paypay=PayPay(phone,password,device_uuid,proxy=proxies)
+            paypay = PayPay(phone, password, device_uuid, proxy=proxies)
             paypay.link_cancel(paypay_link, link_info=link_info)
+            print("Payment link canceled.")
             return jsonify({'message': f'{message}'}), 400
     except Exception as e:
-        # エラー時のレスポンス
+        print(f"Error during process_purchase: {str(e)}")  # ここでエラー内容をログに出力
         return jsonify({'message': f'エラー: {str(e)}'}), 500
     
 def link_check(paypay_link):
