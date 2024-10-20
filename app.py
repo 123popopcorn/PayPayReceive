@@ -13,7 +13,7 @@ CORS(app, resources={r"/process_purchase": {"origins": "https://123popopcorn.git
 # 環境変数から値を取得
 phone = os.getenv('PHONE')
 password = os.getenv('PASSWORD')
-device_uuid = os.getenv('CLIENT_UUID')
+device_uuid = os.getenv('DEVICE_UUID')
 access_token = os.getenv('ACCESS_TOKEN')
 proxy_user = os.getenv('PROXY_USER')
 proxy_pass = os.getenv('PROXY_PASS')
@@ -56,7 +56,7 @@ def process_purchase():
     except Exception as e:
         # エラー時のレスポンス
         print(f"Error during process_purchase: {str(e)}")
-        return jsonify({'message': {str(e)}}), 500
+        return jsonify({'message': str(e)}), 500
     
 def link_check(paypay_link):
     paypay=PayPay(access_token=access_token)
@@ -66,7 +66,7 @@ def link_check(paypay_link):
         if not re.match(r"^https://pay\.paypay\.ne\.jp/[a-zA-Z0-9]+$", paypay_link):
             return False, "支払い失敗！\n送金URLの形式が間違っています\nhttps://pay.paypay.ne.jp/exampleの形式で入力してください", link_info
         
-        if link_info['payload']['pendingP2PInfo']['amount'] != price:
+        if link_info['payload']['pendingP2PInfo']['amount'] != int(price):
             return False, "支払い失敗！\n金額が間違っています", link_info
         
         if link_info['payload']['pendingP2PInfo']['isSetPasscode']:
