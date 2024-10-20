@@ -29,13 +29,13 @@ google_app_password = os.getenv('GOOGLE_APP_PASSWORD')
 
 @app.route('/process_purchase', methods=['POST'])
 def process_purchase():
-    print(phone)
-    print(google_app_password)
+    #print(phone)
+    #print(google_app_password)
     # JSONデータを取得
     data = request.json
     email = data.get('email')
     paypay_link = data.get('paypayLink')
-    print(f"Email: {email}, PayPay Link: {paypay_link}")
+    #print(f"Email: {email}, PayPay Link: {paypay_link}")
     # 購入処理に関するロジック（例: データベースに保存、メール送信など）
     try:
         # 購入処理の疑似ロジック（例: データを保存したり、メール送信をする）
@@ -50,12 +50,12 @@ def process_purchase():
             send_test_email(email)
             return jsonify({'message': f'{message}'}), 200
         else:
-            paypay=PayPay(phone,password,device_uuid,proxy=proxies)
-            paypay.link_cancel(paypay_link, link_info=link_info)
+            #paypay=PayPay(phone,password,device_uuid,proxy=proxies)
+            #paypay.link_cancel(paypay_link, link_info=link_info)
             return jsonify({'message': f'{message}'}), 400
     except Exception as e:
         # エラー時のレスポンス
-        print(f"Error during process_purchase: {str(e)}")
+        #print(f"Error during process_purchase: {str(e)}")
         return jsonify({'message': str(e)}), 500
     
 def link_check(paypay_link):
