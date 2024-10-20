@@ -55,7 +55,8 @@ def process_purchase():
             return jsonify({'message': f'{message}'}), 400
     except Exception as e:
         # エラー時のレスポンス
-        return jsonify({'message': f'エラー: {str(e)}'}), 500
+        print(f"Error during process_purchase: {str(e)}")
+        return jsonify({'message': {str(e)}}), 500
     
 def link_check(paypay_link):
     paypay=PayPay(access_token=access_token)
