@@ -1,2 +1,6 @@
 Flask==2.3.0
 flask-cors==3.0.10
+requests==2.31.0
+bs4==0.0.1
+pkce==1.0.3
+paypaython-mobile
